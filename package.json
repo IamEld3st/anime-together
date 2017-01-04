@@ -1,0 +1,29 @@
+{
+  "name": "animetogether",
+  "version": "0.1.0",
+  "description": "Website/Server to watch anime together...",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.14.0",
+    "socket.io": "^1.7.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/IamEld3st/animetogether.git"
+  },
+  "keywords": [
+    "anime",
+    "watch",
+    "player"
+  ],
+  "author": "Andrzej Szczepaniak (iameld3st@gmail.com)",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/IamEld3st/animetogether/issues"
+  },
+  "homepage": "https://github.com/IamEld3st/animetogether#readme"
+}
