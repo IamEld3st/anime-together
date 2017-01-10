@@ -1,0 +1,17 @@
+.m1 {
+  background:#303030;
+  display:block;
+  padding-left:4px;
+  width:100%;
+  word-break:break-word;
+  white-space:normal
+}
+
+.m2 {
+  background:#101010;
+  display:block;
+  padding-left:4px;
+  width:100%;
+  word-break:break-word;
+  white-space:normal
+}

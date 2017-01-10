@@ -9,7 +9,9 @@
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="/bootstrap.min.css">
-    <link href="//vjs.zencdn.net/5.4.6/video-js.min.css" rel="stylesheet">
+    <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+    <link rel="stylesheet" href="/videojs-skin.css">
+    <link rel="stylesheet" href="/animetogether.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -22,12 +24,56 @@
     
     <div class="container">
       <div class="row">
-        <div class="col-md-4 pull-right"><h1>Anime<b>Together</b></h1></div>
-        <div class="col-md-8"><h3>Current<b>Anime</b>: <div id="currentAnime">null</div></h3></div>
+        <div class="col-md-4 pull-right"><h3>Anime<b>Together</b></h3></div>
+        <div class="col-md-8"><h3>Current<b>Anime</b>: <span id="currentAnime">null</span></h3></div>
       </div>
       <div class="row">
-        <div class="col-md-8"></div>
-        <div class="col-md-4" style="background: #101010;height:700px"></div>
+        <div class="col-md-8">
+          <div class="embed-responsive embed-responsive-16by9">
+            <video class="embed-responsive-item video-js" id="mainVideo"></video>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <h5>Sync<b>Status</b>: <span id="syncStatus">Synced</span></h5>
+              <h5>Current<b>Quality</b>: <span id="currentQuality">High</span></h5>
+              <h5>Current<b>Episode</b>: <span id="currentEpisode">NaN</span></h5>
+            </div>
+            <div class="col-md-4">
+              <h5>Server<b>Time</b>: <span id="serverTime">NaN</span> seconds</h5>
+              <h5>Your<b>Time</b>: <span id="yourTime">NaN</span> seconds</h5>
+              <h5>Time<b>Offset</b>: <span id="timeOffset">NaN</span> seconds</h5>
+            </div>
+            <div class="col-md-4">
+              <h5>Server<b>Status</b>: <span id="serverStatus">NaN</span></h5>
+              <h5>Episodes<b>Left</b>: <span id="episodesLeft">NaN</span></h5>
+              <h5>Ready<b>State</b>: <span id="readyState">NaN</span></h5>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <button class="btn btn-sm btn-success" id="syncPlayer" type="button">Sync<b>Player</b></button>
+              <button class="btn btn-sm btn-warning" id="reloadPlayer" type="button">Reload<b>Player</b></button>
+              <button class="btn btn-sm btn-default" id="qualitySel" type="button">Low<b>Quality</b></button>
+            </div>
+            <div class="col-md-6">
+              <div class="input-group input-group-sm">
+                <input type="text" id="nickname" class="form-control" placeholder="Nickname" aria-describedby="basic-addon2"></input>
+                <span class="input-group-btn">
+                  <button class="btn btn-default" id="changeNickname" type="button" autofocus>Change<b>Nickname</b></button>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div id="messages" style="background: #101010;height:500px;overflow-y:auto"></div>
+          <div class="input-group">
+            <input type="text" id="messageContents" class="form-control" placeholder="Message..." aria-describedby="basic-addon2"></input>
+            <span class="input-group-btn">
+              <button class="btn btn-default" id="sendMessage" type="button" autofocus>Send</button>
+            </span>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -35,7 +81,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="//vjs.zencdn.net/5.4.6/video.min.js"></script>
+    <script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
     <!-- Include client script -->
     <script src="/client.js"></script>
   </body>
