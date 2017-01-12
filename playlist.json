@@ -1,0 +1,6 @@
+{
+    "name":"Example",
+    "totalEpisodes":2,
+    "hq":["http://www.example.com/1hq.mp4","http://www.example.com/2hq.mp4"],
+    "lq":["http://www.example.com/1lq.mp4","http://www.example.com/2lq.mp4"]
+}

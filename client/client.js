@@ -8,6 +8,15 @@ var serverStatus = 0;
 var nick = 'Nickname';
 var player = videojs(document.getElementById('mainVideo'), { "controls": false, "autoplay": false, "preload": "auto" });
 var socket = io();
+var pl,
+    hqSource,
+    lqSource;
+
+$.get( "/info").done(function( data ) {
+    pl = data;
+    hqSource = data.hq;
+    lqSource = data.lq;
+});
 
 function setupPlayer(){
   player.src({ type: "video/mp4", src: "" });
@@ -19,6 +28,8 @@ player.on('ready', function(){player.play()});
 var ui = setInterval(updateInfo, 100);
 function updateInfo(){
   serverTime = player.currentTime();
+  // Name
+  document.getElementById('currentAnime').innerHTML = pl.name;  
   // SyncStatus
   if (syncStatus === 1) {
     document.getElementById('syncStatus').innerHTML = 'Synced';
@@ -52,7 +63,7 @@ function updateInfo(){
     document.getElementById('serverStatus').innerHTML = 'Unknown';
   }
   // EpisodesLeft
-  document.getElementById('episodesLeft').innerHTML = episodesLeft;
+  document.getElementById('episodesLeft').innerHTML = pl.totalEpisodes - currentEpisode;
   // ReadyState
   if (player.readyState() === 0) {
     document.getElementById('readyState').innerHTML = 'Nothing';
