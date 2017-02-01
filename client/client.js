@@ -10,26 +10,34 @@ var player = videojs(document.getElementById('mainVideo'), { "controls": false, 
 var socket = io();
 var pl,
     hqSource,
-    lqSource;
+    lqSource,
+    currentAnime;
 
-$.get( "/info").done(function( data ) {
-    pl = data;
-    hqSource = data.hq;
-    lqSource = data.lq;
+function loadEpisode(number){
+  console.log('Loading ep '+number);
+  $.getJSON('/api/getVideoByUrl/'+currentAnime+'/'+number).done(function(data){
+    player.src({ type: "video/mp4", src: data[0].url });
+    player.on('ready', function(){player.currentTime(0)});
+  });
+}
+
+$.getJSON('/info').done(function(data){
+  currentAnime = data.name;
+  console.log('Loading ep 1');
+  $.getJSON('/api/getVideoByUrl/No Game No Life (Sub)/1').done(function(data){
+    player.src(data[0].url);
+    player.on('ready', function(){player.currentTime(0)});
+  });
+  player.on('ready', function(){player.play()});
 });
 
-function setupPlayer(){
-  player.src({ type: "video/mp4", src: "" });
-  player.on('ready', function(){player.currentTime(serverTime)});
-}
-setupPlayer();
-player.on('ready', function(){player.play()});
+
+
 
 var ui = setInterval(updateInfo, 100);
 function updateInfo(){
-  serverTime = player.currentTime();
   // Name
-  document.getElementById('currentAnime').innerHTML = pl.name;  
+  document.getElementById('currentAnime').innerHTML = currentAnime;  
   // SyncStatus
   if (syncStatus === 1) {
     document.getElementById('syncStatus').innerHTML = 'Synced';
@@ -63,7 +71,7 @@ function updateInfo(){
     document.getElementById('serverStatus').innerHTML = 'Unknown';
   }
   // EpisodesLeft
-  document.getElementById('episodesLeft').innerHTML = pl.totalEpisodes - currentEpisode;
+  document.getElementById('episodesLeft').innerHTML = 0 - currentEpisode;
   // ReadyState
   if (player.readyState() === 0) {
     document.getElementById('readyState').innerHTML = 'Nothing';
@@ -83,6 +91,15 @@ function updateInfo(){
 socket.on('chatMessage', function (msg) {
   document.getElementById('messages').innerHTML += msg;
   $("#messages").scrollTop($("#messages")[0].scrollHeight);
+});
+
+socket.on('serverTimeUpdate', function (msg) {
+  serverTime = msg;
+});
+
+socket.on('animeUpdate', function (anime) {
+  console.log('Updating to anime: '+anime);
+  currentAnime = anime;
 });
 
 $('#sendMessage').on('click', function () {
